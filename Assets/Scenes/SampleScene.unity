@@ -375,6 +375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 705137156}
+  buttonText: {fileID: 1081268269}
   sensorDataRotation: {fileID: 1476853137}
   sensorDataAcceleration: {fileID: 1387980377}
   sensorStates: {fileID: 157087358}
@@ -1133,8 +1134,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 136.11}
-  m_SizeDelta: {x: 400, y: 200}
+  m_AnchoredPosition: {x: 0, y: 150}
+  m_SizeDelta: {x: 400, y: 248.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1934247319
 GameObject:
