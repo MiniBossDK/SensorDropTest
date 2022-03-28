@@ -22,11 +22,11 @@ public class UIInteraction : MonoBehaviour
     [SerializeField]
     private GameObject successImage;
 
+    private long startTime;
 
+    private const int dataLimit = 1000;
 
-    private const int dataLimit = 500;
-
-    private List<Vector3> data = new List<Vector3>();
+    private List<CSVWriter.Data> data = new List<CSVWriter.Data>();
 
     private CSVWriter csvWriter;
     private GyroReader gyroReader;
@@ -72,32 +72,40 @@ public class UIInteraction : MonoBehaviour
         isMeasuring = true;
         buttonText.text = "Reading...";
         button.image.color = Color.yellow;
+        startTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
     }
 
     private void Update()
     {
         OutputSensorData();
+
         if(isMeasuring)
         {
             if (gyroReader.IsLayingFlatUp() || data.Count >= dataLimit)
             {
-                isMeasuring = false;
+                StopMeasuringData();
                 return;
             }
-            data.Add(accelerometerReader.accelaration);
+            
+            float x = accelerometerReader.accelaration.x;
+            float y = accelerometerReader.accelaration.y;
+            float z = accelerometerReader.accelaration.z;
+            csvWriter.serilize(new CSVWriter.Data(
+                Convert.ToInt32(DateTimeOffset.Now.ToUnixTimeMilliseconds() - startTime),
+                x,
+                y,
+                z
+            ));
         }
-        else
-        {
-            if(data.Count > 0)
-            {
-                csvWriter.serilize(data); // Serilize all the data to csv format
-                csvWriter.writer.Close(); // Close the writer
-                data.Clear(); // Dumps the already written data
-                buttonText.text = "Start";
-                button.image.color = Color.green;
-                StartCoroutine(ShowSuccess()); // Show that the data has been written
-            }
-        }
+    }
+
+    private void StopMeasuringData()
+    {
+        csvWriter.writer.Close();
+        isMeasuring = false;
+        buttonText.text = "Start";
+        button.image.color = Color.green;
+        StartCoroutine(ShowSuccess()); // Show that the data has been written with UI for 5 seconds
     }
 
     IEnumerator ShowSuccess()

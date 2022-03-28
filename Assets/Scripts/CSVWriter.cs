@@ -7,34 +7,31 @@ using System;
 public class CSVWriter
 {
     public string FileName { get; private set; }
-    private const string FileFolder = "/Measurements/";
-    public TextWriter writer { get; private set; }
+    public TextWriter writer { get; set; }
+    public struct Data 
+    {
+        public Data(int miliseconds, float x, float y, float z)
+        {
+            Miliseconds = miliseconds;
+            X = x;
+            Y = y;
+            Z = z;
+        }
 
+        public float Miliseconds { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
+    } 
     public CSVWriter(string filename)
     {
         FileName = Application.persistentDataPath + "/" + filename + ".csv";
         writer = new StreamWriter(FileName, true);
-        //Directory.CreateDirectory(Application.persistentDataPath + FileFolder);
+        writer.WriteLine("Time; X; Y; Z");
     }
 
-    public void serilize(List<Vector3> vectors)
+    public void serilize(Data data)
     {
-
-        writer.WriteLine("X; Y; Z");
-
-        foreach (Vector3 v in vectors)
-        {
-            writer.WriteLine($"{v.x}; {v.y}; {v.z}");
-        }
-    }
-
-    public void serilize(List<Quaternion> quaternions)
-    {
-        writer.WriteLine("X; Y; Z; W");
-
-        foreach (Quaternion q in quaternions)
-        {
-            writer.WriteLine($"{q.x}; {q.y}; {q.z}; {q.w}");
-        }
+        writer.WriteLine($"{data.Miliseconds}; {data.X}; {data.Y}; {data.Z}");
     }
 }
