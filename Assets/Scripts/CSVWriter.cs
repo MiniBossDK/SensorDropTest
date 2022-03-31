@@ -7,22 +7,11 @@ using System;
 public class CSVWriter
 {
     public string FileName { get; private set; }
-    public TextWriter writer { get; set; }
-    public struct Data 
-    {
-        public Data(int miliseconds, float x, float y, float z)
-        {
-            Miliseconds = miliseconds;
-            X = x;
-            Y = y;
-            Z = z;
-        }
+    public TextWriter writer { get; private set; }
 
-        public float Miliseconds { get; set; }
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Z { get; set; }
-    } 
+    /**
+     * Prepares a csv file with a given filename
+     */
     public CSVWriter(string filename)
     {
         FileName = Application.persistentDataPath + "/" + filename + ".csv";
@@ -30,7 +19,10 @@ public class CSVWriter
         writer.WriteLine("Time; X; Y; Z");
     }
 
-    public void serilize(Data data)
+    /**
+     * Serilizes the data to the CSV file 
+     */
+    public void serilize(SensorData data)
     {
         writer.WriteLine($"{data.Miliseconds}; {data.X}; {data.Y}; {data.Z}");
     }

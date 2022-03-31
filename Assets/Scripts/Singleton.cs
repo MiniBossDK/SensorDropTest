@@ -32,7 +32,6 @@ public class Singleton<T> : MonoBehaviour
 	}
 }
 
-
 public class SingletonPersistent<T> : MonoBehaviour
 	where T : Component
 {
