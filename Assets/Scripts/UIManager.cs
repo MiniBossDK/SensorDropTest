@@ -59,6 +59,7 @@ public class UIManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        
         if(isWritingData || totalWrittenData > dataLimit)
         {
             SensorData data = new SensorData(
@@ -104,7 +105,7 @@ public class UIManager : MonoBehaviour
                                       $"Z: {v.z}";
     }
     /**
-     * Setting everything up to write the data. The method will not write start writing thedata if the
+     * Setting everything up to write the data. The method will not write start writing the data if the
      * phone is already lying down or if a message is still in view.
      */
     private void StartWritingData()
